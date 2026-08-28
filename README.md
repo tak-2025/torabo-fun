@@ -1,6 +1,7 @@
 # torabo-fun
 
-[torabo-tsuki](https://github.com/sekigon-gonnoc/zmk-keyboard-torabo-tsuki-lp)
+[torabo-tsuki](https://github.com/sekigon-gonnoc/torabo-tsuki-lp)
+（[BOOTH 商品ページ](https://booth.pm/ja/items/7200248)）
 向け非公式ツール集の紹介ページ（GitHub Pages）のソースです。
 
 **→ <https://tak-2025.github.io/torabo-fun/>**
