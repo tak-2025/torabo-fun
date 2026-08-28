@@ -8,7 +8,7 @@
 
 紹介しているツール:
 
-- [Torabo-Studio](https://github.com/tak-2025/Torabo-Studio) — 設定エディタ（ZMK Studio 非公式フォーク）
+- [Torabo-Studio](https://github.com/tak-2025/Torabo-Studio) — 設定エディタ（ZMK Studio 非公式フォーク）。[タブ別の機能紹介](https://tak-2025.github.io/torabo-fun/studio.html)
 - [torabo-tsuki_ext_FW](https://github.com/tak-2025/torabo-tsuki_ext_FW) — 拡張ファームウェアモジュール + firmware-builder
 - [Torabo-Float](https://github.com/tak-2025/Torabo-Float) — キー／レイヤー表示オーバーレイ
 

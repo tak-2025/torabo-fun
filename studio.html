@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Torabo-Studio タブ別機能紹介 — torabo-fun</title>
+<meta name="description" content="Torabo-Studio の各設定タブ（トラックボール・トラックパッド・エンコーダ・LED・タップ反応・マクロ・コンボ・バックアップ）の機能と、必要なハードウェアの紹介です。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐯</text></svg>">
+<style>
+  :root {
+    --bg: #faf9f6;
+    --card: #ffffff;
+    --text: #2b2a27;
+    --muted: #6d6a63;
+    --accent: #b5651d;
+    --accent-soft: #f3e3d3;
+    --border: #e4e1da;
+    --notice-bg: #fdf6e3;
+    --notice-border: #e0c97f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1d1c1a;
+      --card: #26241f;
+      --text: #eae7e0;
+      --muted: #a39e93;
+      --accent: #e0925a;
+      --accent-soft: #3a2e22;
+      --border: #3a3731;
+      --notice-bg: #2e2a1e;
+      --notice-border: #7a6a3a;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Hiragino Sans", "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
+    line-height: 1.8;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  .back { font-size: 0.9rem; margin-bottom: 1.2rem; }
+  h1 { font-size: 1.7rem; color: var(--accent); margin-bottom: 0.4rem; }
+  .lead { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.2rem; }
+  .notice {
+    background: var(--notice-bg);
+    border: 1px solid var(--notice-border);
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.92rem;
+    margin: 1.2rem 0 2rem;
+  }
+  nav.toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+  nav.toc a { color: var(--accent); text-decoration: none; margin-right: 0.9rem; white-space: nowrap; }
+  section.tab {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.3rem 1.5rem;
+    margin-bottom: 1.4rem;
+    scroll-margin-top: 1rem;
+  }
+  section.tab h2 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+  section.tab p { font-size: 0.95rem; margin-bottom: 0.7rem; }
+  .why {
+    font-size: 0.9rem;
+    border-left: 3px solid var(--accent);
+    padding: 0.15rem 0 0.15rem 0.8rem;
+    margin: 0.8rem 0;
+    color: var(--muted);
+  }
+  .hw {
+    background: var(--accent-soft);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    margin: 0.8rem 0;
+  }
+  .hw strong { color: var(--accent); }
+  a { color: var(--accent); }
+  .shot { margin-top: 1rem; }
+  .shot img {
+    width: 100%;
+    max-width: 780px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #ffffff;
+    display: block;
+  }
+  .shot-note { font-size: 0.78rem; color: var(--muted); margin-top: 0.35rem; }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<main>
+
+<p class="back"><a href="./">← torabo-fun トップへ戻る</a></p>
+
+<h1>Torabo-Studio タブ別機能紹介</h1>
+<p class="lead">
+  接続すると、そのキーボードのファームウェアが対応している機能のタブだけが表示されます。
+  どのタブも設定は <strong>BLE 経由で即反映・本体に保存</strong>され、再フラッシュは不要です。
+  キーマップ以外のタブは <a href="https://github.com/tak-2025/torabo-tsuki_ext_FW">torabo-tsuki_ext_FW</a>
+  の該当スニペットを含めた拡張ファームウェアが前提です。
+</p>
+
+<div class="notice">
+  ⚠️ <strong>ハードウェアについての大事な注意</strong>：トラックパッド・エンコーダ・LED のタブは、
+  下の各項目に書いた<strong>特定のハードウェア構成での動作を想定</strong>したものです。
+  市販の任意のトラックパッドやエンコーダ、LED を繋いで自動的に使えるようになるわけではありません。
+</div>
+
+<nav class="toc">
+  <a href="#keymap">キーマップ</a>
+  <a href="#trackball">トラックボール</a>
+  <a href="#trackpad">トラックパッド</a>
+  <a href="#encoder">エンコーダ</a>
+  <a href="#led">LED</a>
+  <a href="#timing">タップ反応</a>
+  <a href="#macros">マクロ</a>
+  <a href="#combos">コンボ</a>
+  <a href="#backup">バックアップ</a>
+</nav>
+
+<section class="tab" id="keymap">
+  <h2>キーマップ</h2>
+  <p>
+    ZMK Studio 標準のキーマップ／レイヤー編集そのままです。レイヤーを選んでキーをクリックし、
+    割り当てを変えて保存します。このタブだけは拡張ファームウェアなし（標準ファームウェア）でも使えます。
+  </p>
+  <div class="hw"><strong>必要なもの:</strong> torabo-tsuki 本体のみ（標準ファームウェアで可）</div>
+</section>
+
+<section class="tab" id="trackball">
+  <h2>トラックボール</h2>
+  <p>
+    レイヤー×軸（X/Y）ごとに、ボールの動きへ「カーソル移動／スクロール／無効」と速度・向きを割り当てます。
+    ボールを動かすと一時的にマウス用レイヤーへ切り替わる「一時レイヤー（オートマウス）」と、
+    スクロールを止めた後も勢いに応じて滑り続ける<strong>慣性スクロール</strong>もここで調整します。
+  </p>
+  <div class="hw"><strong>必要なもの:</strong> 本体内蔵のトラックボール ＋ 拡張ファームウェア</div>
+  <div class="shot">
+    <a href="img/studio-trackball.png"><img src="img/studio-trackball.png" alt="トラックボール設定タブ" loading="lazy"></a>
+    <p class="shot-note">クリックで原寸表示</p>
+  </div>
+</section>
+
+<section class="tab" id="trackpad">
+  <h2>トラックパッド</h2>
+  <p>
+    レイヤーごとに、なぞる操作（スワイプ）の横方向・縦方向へ「カーソル移動／スクロール／音量／明るさ」などを割り当てます。
+    たたく操作（単タップ・ダブルタップ・2本指タップ・長押し）への動作割り当てと、慣性スクロールにも対応しています。
+  </p>
+  <div class="hw">
+    <strong>必要なもの:</strong>
+    <a href="https://booth.pm/ja/items/8083855">torabo-tsuki LP 拡張用トラックパッド</a>（のぎけす屋・BOOTH）
+    ＋ 拡張ファームウェア
+  </div>
+  <div class="shot">
+    <a href="img/studio-trackpad.png"><img src="img/studio-trackpad.png" alt="トラックパッド設定タブ" loading="lazy"></a>
+    <p class="shot-note">クリックで原寸表示</p>
+  </div>
+</section>
+
+<section class="tab" id="encoder">
+  <h2>エンコーダ</h2>
+  <p>
+    ロータリーエンコーダの右回し・左回し・押し込みを、レイヤーごとに割り当てます（音量・ズーム・左右キー・カスタムなど）。
+    エンコーダはキーマップ上のキーではないため、キー位置を消費しません。
+  </p>
+  <div class="hw">
+    <strong>必要なもの:</strong>
+    <a href="https://tarohayashi.booth.pm/items/5967252">1U ホイールエンコーダー THQWGD001</a>（tarohayashi・BOOTH）を、
+    <strong>作者が自作した FFC 接続基板</strong>で本体に接続した構成 ＋ 拡張ファームウェア。
+    市販のエンコーダをそのまま挿して使えるものではありません。
+  </div>
+  <div class="shot">
+    <a href="img/studio-encoder.png"><img src="img/studio-encoder.png" alt="エンコーダ設定タブ" loading="lazy"></a>
+    <p class="shot-note">クリックで原寸表示</p>
+  </div>
+</section>
+
+<section class="tab" id="led">
+  <h2>LED</h2>
+  <p>
+    拡張基盤の3色 LED を、左右それぞれ独立にルールベースで設定します。
+    「相方（もう半分）を見失った」「電池残量が少ない」「修飾キー押下中」「BLE プロファイル切替」などのきっかけに、
+    色と光り方（点灯・ゆっくり点滅・ダブル点滅など）を割り当て、上から順に最初に当てはまったルールが表示されます。
+  </p>
+  <div class="hw">
+    <strong>必要なもの:</strong>
+    <a href="https://github.com/sekigon-gonnoc/BLE-Micro-Pro/blob/master/bmp-boost/README.md#bmp-boost%E7%94%A8%E6%8B%A1%E5%BC%B5%E3%83%9C%E3%83%BC%E3%83%89">bmp-boost 用拡張ボード</a>（sekigon-gonnoc 氏が設計データを公開。JLCPCB などの基板業者へ<strong>自分で発注</strong>したもの）
+    ＋ 拡張ファームウェア
+  </div>
+  <div class="shot">
+    <a href="img/studio-led.png"><img src="img/studio-led.png" alt="LED設定タブ" loading="lazy"></a>
+    <p class="shot-note">クリックで原寸表示</p>
+  </div>
+</section>
+
+<section class="tab" id="timing">
+  <h2>タップ反応</h2>
+  <p>
+    Hold-Tap（&amp;mt / &amp;lt）の判定時間と、キーボードのデバウンス時間を再ビルドなしで調整します。
+    プリセット（標準／ロール誤爆防止など）を選ぶだけでも使え、詳細設定で個別パラメータも詰められます。
+  </p>
+  <p class="why">
+    作った理由：Mod-Tap の Shift が速いタイピングで誤認識され、意図せず大文字が入力されてしまうのを、
+    ビルドし直さずにその場で判定時間を調整して追い込めるようにするためです。
+  </p>
+  <div class="hw"><strong>必要なもの:</strong> 拡張ファームウェアのみ（追加ハードウェア不要）</div>
+  <div class="shot">
+    <a href="img/studio-timing.png"><img src="img/studio-timing.png" alt="タップ反応設定タブ" loading="lazy"></a>
+    <p class="shot-note">クリックで原寸表示</p>
+  </div>
+</section>
+
+<section class="tab" id="macros">
+  <h2>マクロ</h2>
+  <p>
+    各スロットに「キーを順に入力する手順」を登録します。keymap 側に <code>&amp;dmac 0</code> などを置いたキーで再生されます。
+    既存 keymap ファイルからの取り込みにも対応しています。
+  </p>
+  <p class="why">
+    作った理由：ZMK の通常のマクロは内容を変えるたびにファームウェアのビルドと書き込みが必要になるため、
+    マクロの中身だけを BLE でその場で書き換えられるようにしました。
+  </p>
+  <div class="hw"><strong>必要なもの:</strong> 拡張ファームウェアのみ（追加ハードウェア不要）</div>
+  <div class="shot">
+    <a href="img/studio-macros.png"><img src="img/studio-macros.png" alt="マクロ設定タブ" loading="lazy"></a>
+    <p class="shot-note">クリックで原寸表示</p>
+  </div>
+</section>
+
+<section class="tab" id="combos">
+  <h2>コンボ</h2>
+  <p>
+    複数のキー位置の同時押しに、1つの動作（キー入力・モード切替・マクロ再生）を割り当てます。
+    タイムアウトや直前アイドル時間、有効になるモードの指定など、誤発火を抑える調整もできます。
+  </p>
+  <p class="why">
+    作った理由：マクロと同じく、コンボの定義変更のたびにファームウェアを焼き直さなくて済むようにするためです。
+  </p>
+  <div class="hw"><strong>必要なもの:</strong> 拡張ファームウェアのみ（追加ハードウェア不要）</div>
+  <div class="shot">
+    <a href="img/studio-combos.png"><img src="img/studio-combos.png" alt="コンボ設定タブ" loading="lazy"></a>
+    <p class="shot-note">クリックで原寸表示</p>
+  </div>
+</section>
+
+<section class="tab" id="backup">
+  <h2>バックアップ</h2>
+  <p>
+    キーマップと独自設定の一式を JSON 1ファイルに書き出し・復元します。設定を作り込む前後で取っておくと安心です。
+  </p>
+  <p class="why">
+    キーマップ（ビヘイビア）の ID は個体ごとに採番が異なるため、そのままでは他のキーボードへ設定を移せません。
+    バックアップに ID と名前の対応表を持たせて読み替えることで、<strong>別の個体への設定移植</strong>もできるようにしています。
+  </p>
+  <div class="hw"><strong>必要なもの:</strong> 特になし（接続できれば利用可）</div>
+</section>
+
+<footer>
+  <p><a href="./">← torabo-fun トップへ戻る</a> ／ <a href="https://tak-2025.github.io/Torabo-Studio/">Torabo-Studio をブラウザで開く</a></p>
+  <p>スクリーンショットは開発用のモックデータによる表示例です。</p>
+</footer>
+
+</main>
+</body>
+</html>
