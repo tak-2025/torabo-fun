@@ -90,6 +90,25 @@
     font-weight: 600;
   }
   .card .links a:hover { filter: brightness(1.08); }
+  .shots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+  .shots a { display: block; text-decoration: none; color: var(--muted); font-size: 0.8rem; text-align: center; }
+  .shots img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    object-position: top;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #ffffff;
+    display: block;
+  }
+  .shots span { display: block; margin-top: 0.35rem; }
+  .shots-note { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; }
   .badge {
     display: inline-block;
     font-size: 0.72rem;
@@ -148,6 +167,13 @@
     <a class="primary" href="https://tak-2025.github.io/Torabo-Studio/">ブラウザで開く</a>
     <a href="https://github.com/tak-2025/Torabo-Studio">GitHub</a>
   </div>
+  <div class="shots">
+    <a href="img/studio-trackball.png"><img src="img/studio-trackball.png" alt="トラックボール設定タブ：レイヤーごとの動作・速度と慣性スクロール" loading="lazy"><span>トラックボール（慣性スクロール対応）</span></a>
+    <a href="img/studio-trackpad.png"><img src="img/studio-trackpad.png" alt="トラックパッド設定タブ：スワイプ・タップ／ジェスチャの割り当て" loading="lazy"><span>トラックパッド（スワイプ／タップ割り当て）</span></a>
+    <a href="img/studio-led.png"><img src="img/studio-led.png" alt="LED設定タブ：左右独立のルールベース設定" loading="lazy"><span>LED（左右独立のルール設定）</span></a>
+    <a href="img/studio-timing.png"><img src="img/studio-timing.png" alt="タップ反応設定タブ：Hold-Tapプリセットとデバウンス" loading="lazy"><span>タップ反応（Hold-Tap／デバウンス）</span></a>
+  </div>
+  <p class="shots-note">クリックで原寸表示。これらの設定はすべて BLE 経由で即反映されます（再フラッシュ不要）。</p>
 </div>
 
 <div class="card">
