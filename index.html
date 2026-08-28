@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>torabo-fun — torabo-tsuki を楽しむ非公式ツール集</title>
+<meta name="description" content="トラックボール付き無線分割キーボード torabo-tsuki 向けの非公式ツール集（拡張ファームウェア・設定エディタ・キー表示オーバーレイ）の紹介ページです。">
+<style>
+  :root {
+    --bg: #faf9f6;
+    --card: #ffffff;
+    --text: #2b2a27;
+    --muted: #6d6a63;
+    --accent: #b5651d;
+    --accent-soft: #f3e3d3;
+    --border: #e4e1da;
+    --notice-bg: #fdf6e3;
+    --notice-border: #e0c97f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1d1c1a;
+      --card: #26241f;
+      --text: #eae7e0;
+      --muted: #a39e93;
+      --accent: #e0925a;
+      --accent-soft: #3a2e22;
+      --border: #3a3731;
+      --notice-bg: #2e2a1e;
+      --notice-border: #7a6a3a;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Hiragino Sans", "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
+    line-height: 1.8;
+  }
+  main { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  header.hero { text-align: center; margin-bottom: 2rem; }
+  .hero h1 {
+    font-size: 2.4rem;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    font-weight: 800;
+  }
+  .hero p.tagline { font-size: 1.05rem; color: var(--muted); margin-top: 0.4rem; }
+  .notice {
+    background: var(--notice-bg);
+    border: 1px solid var(--notice-border);
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.92rem;
+    margin: 1.5rem 0;
+  }
+  .disclaimer { font-size: 0.85rem; color: var(--muted); margin: 1.5rem 0; }
+  section.intro { margin: 2rem 0; }
+  section.intro p { margin-bottom: 0.8rem; }
+  h2 {
+    font-size: 1.25rem;
+    margin: 2.5rem 0 1rem;
+    padding-left: 0.6rem;
+    border-left: 4px solid var(--accent);
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.3rem 1.4rem;
+    margin-bottom: 1.1rem;
+  }
+  .card h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
+  .card p.desc { font-size: 0.95rem; margin-bottom: 0.8rem; }
+  .card .links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .card .links a {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 0.88rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .card .links a.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+  .card .links a:hover { filter: brightness(1.08); }
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 6px;
+    padding: 0.1rem 0.5rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    font-weight: 600;
+  }
+  ol.flow { margin: 0.5rem 0 0 1.4rem; }
+  ol.flow li { margin-bottom: 0.5rem; }
+  a { color: var(--accent); }
+  footer {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  footer p { margin-bottom: 0.4rem; }
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <h1>torabo-fun</h1>
+  <p class="tagline">トラックボール付き無線分割キーボード <strong>torabo-tsuki</strong> をもっと楽しむための、非公式ツール集</p>
+</header>
+
+<div class="notice">
+  ⚠️ 開発中の趣味プロジェクトのため、<strong>リポジトリ名やツール名は今後変更される可能性があります</strong>。
+  リンクが切れていた場合は、お手数ですがこのページ（torabo-fun）から辿り直してください。ここが常に最新の入口です。
+</div>
+
+<section class="intro">
+  <p>
+    <a href="https://github.com/sekigon-gonnoc/zmk-keyboard-torabo-tsuki-lp">torabo-tsuki</a>
+    （sekigon-gonnoc 氏設計）を日々使う中で「こうだったらいいな」を形にしていった個人製作のツール群です。
+    ファームウェアの機能を拡張し、その設定をブラウザから<strong>再フラッシュ不要で BLE ライブ編集</strong>できるようにしています。
+  </p>
+  <p>どのツールもインストール不要で、ブラウザ（Chrome / Edge）から試せます。</p>
+</section>
+
+<h2>ツール一覧</h2>
+
+<div class="card">
+  <h3>Torabo-Studio <span class="badge">設定エディタ</span></h3>
+  <p class="desc">
+    ZMK Studio の非公式フォーク。キーマップ編集はそのままに、トラックボール・トラックパッド・
+    エンコーダ・LED・マクロ・コンボを BLE 経由でライブ編集するタブを追加。設定のバックアップ／復元にも対応。
+  </p>
+  <div class="links">
+    <a class="primary" href="https://tak-2025.github.io/Torabo-Studio/">ブラウザで開く</a>
+    <a href="https://github.com/tak-2025/Torabo-Studio">GitHub</a>
+  </div>
+</div>
+
+<div class="card">
+  <h3>torabo-tsuki_ext_FW <span class="badge">拡張ファームウェア</span></h3>
+  <p class="desc">
+    torabo-tsuki 用の拡張ファームウェア機能モジュール（ZMK モジュール）。使いたい機能をスニペットで個別に
+    ON/OFF でき、必要なファイル一式はブラウザで開くだけの firmware-builder で生成。
+    PC に開発環境を入れずに GitHub Actions でビルドできます。
+  </p>
+  <div class="links">
+    <a class="primary" href="https://tak-2025.github.io/torabo-tsuki_ext_FW/">firmware-builder を開く</a>
+    <a href="https://github.com/tak-2025/torabo-tsuki_ext_FW">GitHub</a>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Torabo-Float <span class="badge">キー表示オーバーレイ</span></h3>
+  <p class="desc">
+    「いま押しているキー」と「アクティブレイヤー」を透過・最前面のフローティングウィンドウに
+    リアルタイム表示する Windows 常駐アプリ（Tauri v2）。配信や操作説明のデモ、多レイヤーキーマップの確認に。
+    Web 版はブラウザで開くだけで動きます。
+  </p>
+  <div class="links">
+    <a class="primary" href="https://tak-2025.github.io/Torabo-Float/">Web 版を開く</a>
+    <a href="https://github.com/tak-2025/Torabo-Float">GitHub</a>
+  </div>
+</div>
+
+<h2>どれから見ればいい？</h2>
+<div class="card">
+  <ol class="flow">
+    <li><strong>キーマップ編集だけなら</strong> — いまのファームウェアのまま
+      <a href="https://tak-2025.github.io/Torabo-Studio/">Torabo-Studio</a> を開いて接続すれば使えます。</li>
+    <li><strong>トラックボールの速度調整やマクロなど独自機能も使うなら</strong> —
+      <a href="https://tak-2025.github.io/torabo-tsuki_ext_FW/">firmware-builder</a>
+      で拡張ファームウェアをビルドして書き込み → Torabo-Studio の追加タブから設定します。</li>
+    <li><strong>押しているキーを画面に出したいなら</strong> — 拡張ファームウェア導入後に
+      <a href="https://tak-2025.github.io/Torabo-Float/">Torabo-Float</a> を開きます。</li>
+  </ol>
+</div>
+
+<p class="disclaimer">
+  ⚠️ 本プロジェクト群は <a href="https://zmk.dev/">ZMK Project</a> および torabo-tsuki の設計者とは
+  提携・承認関係にない非公式ツールです。開発には生成 AI を使用しており、動作の保証はありません。
+  各自の構成で動作確認のうえ、自己責任でご利用ください。問題報告は各リポジトリの Issues へお願いします。
+</p>
+
+<footer>
+  <p>本家: <a href="https://github.com/sekigon-gonnoc/zmk-keyboard-torabo-tsuki-lp">sekigon-gonnoc/zmk-keyboard-torabo-tsuki-lp</a>（キーボード本体）</p>
+  <p>作者: <a href="https://github.com/tak-2025">@tak-2025</a> — 趣味で作っています</p>
+</footer>
+
+</main>
+</body>
+</html>
