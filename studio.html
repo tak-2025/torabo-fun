@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Torabo-Studio タブ別機能紹介 — torabo-fun</title>
-<meta name="description" content="Torabo-Studio の各設定タブ（トラックボール・トラックパッド・エンコーダ・LED・タップ反応・マクロ・コンボ・バックアップ）の機能と、必要なハードウェアの紹介です。">
+<meta name="description" content="Torabo-Studio の各設定タブ（トラックボール・トラックパッド・エンコーダ・マクロ・コンボ・タップ反応・LED・バックアップ・FW情報）の機能と、必要なハードウェアの紹介です。">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐯</text></svg>">
 <style>
   :root {
@@ -59,6 +59,13 @@
     margin-bottom: 2rem;
   }
   nav.toc a { color: var(--accent); text-decoration: none; margin-right: 0.9rem; white-space: nowrap; }
+  nav.toc .toc-group {
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+  }
+  nav.toc .toc-group + a { margin-left: 0; }
   section.tab {
     background: var(--card);
     border: 1px solid var(--border);
@@ -113,8 +120,11 @@
 <p class="lead">
   接続すると、そのキーボードのファームウェアが対応している機能のタブだけが表示されます。
   どのタブも設定は <strong>BLE 経由で即反映・本体に保存</strong>され、再フラッシュは不要です。
-  キーマップ以外のタブは <a href="https://github.com/tak-2025/torabo-tsuki_ext_FW">torabo-tsuki_ext_FW</a>
+  キーマップ以外のタブは <a target="_blank" rel="noopener" href="https://github.com/tak-2025/torabo-tsuki_ext_FW">torabo-tsuki_ext_FW</a>
   の該当スニペットを含めた拡張ファームウェアが前提です。
+  タブは全部で 10 個あり、日々の設定を触る<strong>「編集」</strong>（キーマップ〜LED）と、
+  キーボード全体を扱う<strong>「管理」</strong>（バックアップ・FW情報）の2グループに分かれています。
+  画面の表示言語は日本語 / English を切り替えられます。
 </p>
 
 <div class="notice">
@@ -124,29 +134,33 @@
 </div>
 
 <nav class="toc">
+  <span class="toc-group">編集</span>
   <a href="#keymap">キーマップ</a>
   <a href="#trackball">トラックボール</a>
   <a href="#trackpad">トラックパッド</a>
   <a href="#encoder">エンコーダ</a>
-  <a href="#led">LED</a>
-  <a href="#timing">タップ反応</a>
   <a href="#macros">マクロ</a>
   <a href="#combos">コンボ</a>
+  <a href="#timing">タップ反応</a>
+  <a href="#led">LED</a>
+  <span class="toc-group">管理</span>
   <a href="#backup">バックアップ</a>
+  <a href="#fwinfo">FW情報</a>
 </nav>
 
 <section class="tab" id="keymap">
   <h2>キーマップ</h2>
   <p>
-    ZMK Studio 標準のキーマップ／レイヤー編集そのままです。レイヤーを選んでキーをクリックし、
-    割り当てを変えて保存します。このタブだけは拡張ファームウェアなし（標準ファームウェア）でも使えます。
-  </p>
-  <p>
-    キーの割り当ては画面上のキーボードをクリックして行えます。この画面は US 配列に加えて
-    <strong>JIS 配列表示にも切り替えられ</strong>、半/全・無変換・変換・かな などの日本語キーもクリックで割り当てられます。
+    標準キーボードを表示してキーボード選択で入力できます。JIS利用向けにJISでの設定も可能にしています。
     実際に入力される文字は OS 側のキーボードレイアウト設定（US/JIS）に依存します。
   </p>
-  <div class="hw"><strong>必要なもの:</strong> torabo-tsuki 本体のみ（標準ファームウェアで可）</div>
+  <p>
+    キーキャップの刻印も見直しました。レイヤーキー（<code>&amp;lt</code>）やモッドタップ（<code>&amp;mt</code>）は、
+    押しっぱなしにしたときの動作をキーの上側に、<strong>単押しで入力される文字</strong>をキーの中央に表示します。
+    マクロを呼ぶキーはスロット名（名前を付けていなければ <code>M0</code>〜）で表示されます。
+    刻印の並びは US / JIS を切り替えられます（既定は US）。
+  </p>
+  <div class="hw">標準ファームウェアでも動作可能</div>
   <div class="shot">
     <a href="img/studio-keymap-jis.png"><img src="img/studio-keymap-jis.png" alt="キーマップタブ：JIS配列表示のクリック割り当てキーボード" loading="lazy"></a>
     <p class="shot-note">クリックで原寸表示（JIS 配列表示に切り替えた状態）</p>
@@ -158,9 +172,9 @@
   <p>
     レイヤー×軸（X/Y）ごとに、ボールの動きへ「カーソル移動／スクロール／無効」と速度・向きを割り当てます。
     ボールを動かすと一時的にマウス用レイヤーへ切り替わる「一時レイヤー（オートマウス）」と、
-    スクロールを止めた後も勢いに応じて滑り続ける<strong>慣性スクロール</strong>もここで調整します。
+    スクロールを止めた後も勢いに応じて滑り続ける<strong>慣性スクロール</strong>が設定可能です。
   </p>
-  <div class="hw"><strong>必要なもの:</strong> 本体内蔵のトラックボール ＋ 拡張ファームウェア</div>
+  <div class="hw">拡張ファームウェアを入れることで動作します。</div>
   <div class="shot">
     <a href="img/studio-trackball.png"><img src="img/studio-trackball.png" alt="トラックボール設定タブ" loading="lazy"></a>
     <p class="shot-note">クリックで原寸表示</p>
@@ -171,16 +185,14 @@
   <h2>トラックパッド</h2>
   <p>
     レイヤーごとに、なぞる操作（スワイプ）の横方向・縦方向へ「カーソル移動／スクロール／音量／明るさ」などを割り当てます。
-    たたく操作（単タップ・ダブルタップ・2本指タップ・長押し）への動作割り当てと、慣性スクロールにも対応しています。
+    たたく操作（単タップ・ダブルタップ・2本指タップ・長押し）への動作割り当てと、慣性スクロールが設定可能です。
   </p>
   <div class="hw">
-    <strong>必要なもの:</strong>
-    <a href="https://booth.pm/ja/items/8083855">torabo-tsuki LP 拡張用トラックパッド</a>（のぎけす屋・BOOTH）
-    ＋ 拡張ファームウェア。
+    拡張ファームウェアと <a target="_blank" rel="noopener" href="https://booth.pm/ja/items/8083855">torabo-tsuki LP 拡張用トラックパッド</a>が必要です。
     トラックボールを載せている側にトラックパッドも付ける場合は、さらに
-    <a href="https://github.com/sekigon-gonnoc/BLE-Micro-Pro/blob/master/bmp-boost/README.md#bmp-boost%E7%94%A8%E6%8B%A1%E5%BC%B5%E3%83%9C%E3%83%BC%E3%83%89">bmp-boost 用拡張ボード</a>（sekigon-gonnoc 氏が公開されている設計データを JLCPCB などの基板業者へ<strong>自分で発注</strong>したもの）が必要です。
+    <a target="_blank" rel="noopener" href="https://github.com/sekigon-gonnoc/BLE-Micro-Pro/blob/master/bmp-boost/README.md#bmp-boost%E7%94%A8%E6%8B%A1%E5%BC%B5%E3%83%9C%E3%83%BC%E3%83%89">bmp-boost 用拡張ボード</a>をJLCPCB などで作成したものが必要です。
     拡張ボードからトラックパッドへ繋ぐ短いケーブルとしては
-    <a href="https://amzn.to/3Umduew">FFC ケーブル（6ピン・0.5mm ピッチ・30mm 長・A タイプ）</a>を購入しました。
+    <a target="_blank" rel="noopener" href="https://amzn.to/3Umduew">FFC ケーブル（6ピン・0.5mm ピッチ・30mm 長・A タイプ）</a>を使っています。
   </div>
   <div class="shot">
     <a href="img/studio-trackpad.png"><img src="img/studio-trackpad.png" alt="トラックパッド設定タブ" loading="lazy"></a>
@@ -192,13 +204,11 @@
   <h2>エンコーダ</h2>
   <p>
     ロータリーエンコーダの右回し・左回し・押し込みを、レイヤーごとに割り当てます（音量・ズーム・左右キー・カスタムなど）。
-    エンコーダはキーマップ上のキーではないため、キー位置を消費しません。
+    押し込みについては動作が検証できていません。
   </p>
   <div class="hw">
-    <strong>必要なもの:</strong>
-    <a href="https://tarohayashi.booth.pm/items/5967252">1U ホイールエンコーダー THQWGD001</a>（tarohayashi・BOOTH）を、
-    <strong>自作の FFC 接続基板</strong>で本体に接続した構成 ＋ 拡張ファームウェア。
-    市販のエンコーダをそのまま挿して使えるものではありません。
+    <a target="_blank" rel="noopener" href="https://tarohayashi.booth.pm/items/5967252">1U ホイールエンコーダー THQWGD001</a>（tarohayashi・BOOTH）を、
+    とサンプル基盤の情報を元にFFC接続に替えた基盤で本体に接続した構成でホイールのみ動作確認しています。
   </div>
   <div class="shot">
     <a href="img/studio-encoder.png"><img src="img/studio-encoder.png" alt="エンコーダ設定タブ" loading="lazy"></a>
@@ -206,20 +216,28 @@
   </div>
 </section>
 
-<section class="tab" id="led">
-  <h2>LED</h2>
+<section class="tab" id="macros">
+  <h2>マクロ</h2>
   <p>
-    拡張基盤の3色 LED を、左右それぞれ独立にルールベースで設定します。
-    「相方（もう半分）を見失った」「電池残量が少ない」「修飾キー押下中」「BLE プロファイル切替」などのきっかけに、
-    色と光り方（点灯・ゆっくり点滅・ダブル点滅など）を割り当て、上から順に最初に当てはまったルールが表示されます。
+    ファームウェア更新不要でマクロの設定が可能です。
+    既存 keymap ファイルからの取り込みにも対応しています。
   </p>
-  <div class="hw">
-    <strong>必要なもの:</strong>
-    <a href="https://github.com/sekigon-gonnoc/BLE-Micro-Pro/blob/master/bmp-boost/README.md#bmp-boost%E7%94%A8%E6%8B%A1%E5%BC%B5%E3%83%9C%E3%83%BC%E3%83%89">bmp-boost 用拡張ボード</a>（sekigon-gonnoc 氏が公開されている設計データを JLCPCB などの基板業者へ<strong>自分で発注</strong>したもの）
-    ＋ 拡張ファームウェア
-  </div>
+
+  <div class="hw">拡張ファームウェアを入れることで動作します。</div>
   <div class="shot">
-    <a href="img/studio-led.png"><img src="img/studio-led.png" alt="LED設定タブ" loading="lazy"></a>
+    <a href="img/studio-macros.png"><img src="img/studio-macros.png" alt="マクロ設定タブ" loading="lazy"></a>
+    <p class="shot-note">クリックで原寸表示</p>
+  </div>
+</section>
+
+<section class="tab" id="combos">
+  <h2>コンボ</h2>
+  <p>
+    マクロと同様です。こちらは私がkeymap editor でコンボを作っていなかったので、keymap上の登録内容が不案内なため、keymapからのインポート機能は作っていません。
+  </p>
+  <div class="hw">拡張ファームウェアを入れることで動作します。</div>
+  <div class="shot">
+    <a href="img/studio-combos.png"><img src="img/studio-combos.png" alt="コンボ設定タブ" loading="lazy"></a>
     <p class="shot-note">クリックで原寸表示</p>
   </div>
 </section>
@@ -234,42 +252,25 @@
     作った理由：Mod-Tap の Shift が速いタイピングで誤認識され、意図せず大文字が入力されてしまうのを、
     ビルドし直さずにその場で判定時間を調整して追い込めるようにするためです。
   </p>
-  <div class="hw"><strong>必要なもの:</strong> 拡張ファームウェアのみ（追加ハードウェア不要）</div>
+  <div class="hw">拡張ファームウェアを入れることで動作します。</div>
   <div class="shot">
     <a href="img/studio-timing.png"><img src="img/studio-timing.png" alt="タップ反応設定タブ" loading="lazy"></a>
     <p class="shot-note">クリックで原寸表示</p>
   </div>
 </section>
 
-<section class="tab" id="macros">
-  <h2>マクロ</h2>
+<section class="tab" id="led">
+  <h2>LED</h2>
   <p>
-    各スロットに「キーを順に入力する手順」を登録します。keymap 側に <code>&amp;dmac 0</code> などを置いたキーで再生されます。
-    既存 keymap ファイルからの取り込みにも対応しています。
+    拡張基盤の3色 LED を、左右それぞれ独立にルールベースで設定します。
+    「相方（もう半分）を見失った」「電池残量が少ない」「修飾キー押下中」「BLE プロファイル切替」などのきっかけに、
+    色と光り方（点灯・ゆっくり点滅・ダブル点滅など）を割り当て、上から順に最初に当てはまったルールが表示されます。
   </p>
-  <p class="why">
-    作った理由：ZMK の通常のマクロは内容を変えるたびにファームウェアのビルドと書き込みが必要になるため、
-    マクロの中身だけを BLE でその場で書き換えられるようにしました。
-  </p>
-  <div class="hw"><strong>必要なもの:</strong> 拡張ファームウェアのみ（追加ハードウェア不要）</div>
-  <div class="shot">
-    <a href="img/studio-macros.png"><img src="img/studio-macros.png" alt="マクロ設定タブ" loading="lazy"></a>
-    <p class="shot-note">クリックで原寸表示</p>
+  <div class="hw">
+    <a target="_blank" rel="noopener" href="https://github.com/sekigon-gonnoc/BLE-Micro-Pro/blob/master/bmp-boost/README.md#bmp-boost%E7%94%A8%E6%8B%A1%E5%BC%B5%E3%83%9C%E3%83%BC%E3%83%89">bmp-boost 用拡張ボード</a>を JLCPCB などで作成したものが必要です。
   </div>
-</section>
-
-<section class="tab" id="combos">
-  <h2>コンボ</h2>
-  <p>
-    複数のキー位置の同時押しに、1つの動作（キー入力・モード切替・マクロ再生）を割り当てます。
-    タイムアウトや直前アイドル時間、有効になるモードの指定など、誤発火を抑える調整もできます。
-  </p>
-  <p class="why">
-    作った理由：マクロと同じく、コンボの定義変更のたびにファームウェアを焼き直さなくて済むようにするためです。
-  </p>
-  <div class="hw"><strong>必要なもの:</strong> 拡張ファームウェアのみ（追加ハードウェア不要）</div>
   <div class="shot">
-    <a href="img/studio-combos.png"><img src="img/studio-combos.png" alt="コンボ設定タブ" loading="lazy"></a>
+    <a href="img/studio-led.png"><img src="img/studio-led.png" alt="LED設定タブ" loading="lazy"></a>
     <p class="shot-note">クリックで原寸表示</p>
   </div>
 </section>
@@ -277,17 +278,46 @@
 <section class="tab" id="backup">
   <h2>バックアップ</h2>
   <p>
-    キーマップと独自設定の一式を JSON 1ファイルに書き出し・復元します。設定を作り込む前後で取っておくと安心です。
+   拡張した機能の設定内容や、他の機器に同じ設定を移すために作成しました。
+  </p>
+  <p>
+   エクスポート・インポートに加えて、keymap.keymap を保存（ZMK ソース出力）と、ビヘイビア名を付与（旧ファイルを他機に移す準備）にも対応しています。
+  </p>
+  <p>
+   他の機種へインポートする際は、意図した反映にならない可能性があるので、必ず、インポート前にバックアップを取得してください。
+  </p>
+  <div class="hw">拡張ファームウェアを入れることで動作します。</div>
+  <div class="shot">
+    <a href="img/studio-backup.png"><img src="img/studio-backup.png" alt="バックアップ（設定の保存・復元）: エクスポート／keymap.keymap を保存／インポート／ビヘイビア名を付与の4ボタン" loading="lazy"></a>
+    <p class="shot-note">クリックで原寸表示（エクスポート・インポートに加えて、ZMK ソース（keymap.keymap）の書き出しと、旧ファイルへのビヘイビア名付与）</p>
+  </div>
+</section>
+
+<section class="tab" id="fwinfo">
+  <h2>FW情報</h2>
+  <p>
+    接続したキーボードが名乗った内容（ファームウェアの自己申告）を表示します。拡張ファームウェアのバージョン、
+    入っている機能の一覧、機能ごとのデータ形式がアプリ側と合っているか、
+    左右それぞれの標準FFC・拡張FFC に何が付いていると申告されているか（モジュール構成）を確認できます。
+    表示するだけのタブで、書き込みはありません。届いた生データもそのまま並べられるので、
+    うまく動かないときの報告に添えられます。
   </p>
   <p class="why">
-    キーマップ（ビヘイビア）の ID は個体ごとに採番が異なるため、そのままでは他のキーボードへ設定を移せません。
-    バックアップに ID と名前の対応表を持たせて読み替えることで、<strong>別の個体への設定移植</strong>もできるようにしています。
+    作った理由：どのタブが出るかは、この申告内容で決まります。出てくるはずのタブが見当たらないときに、
+    ファームウェアにその機能が入っていないのか、読み取れていないだけなのかを切り分けられるようにするためです。
   </p>
-  <div class="hw"><strong>必要なもの:</strong> 特になし（接続できれば利用可）</div>
+  <div class="hw">
+    拡張ファームウェアを入れることで動作します。機能一覧を返さないファームウェアでは、その旨を表示します
+    （その場合も各タブは従来どおり全部表示されます）。
+  </div>
+  <div class="shot">
+    <a href="img/studio-fwinfo.png"><img src="img/studio-fwinfo.png" alt="ファームウェア情報: ext_FW バージョン、機能ごとのデータ形式と対応内容、左右×標準/拡張のモジュール構成" loading="lazy"></a>
+    <p class="shot-note">クリックで原寸表示（FW が名乗る機能一覧とデータ形式、左右×標準/拡張のモジュール構成を表示・読み取り専用）</p>
+  </div>
 </section>
 
 <footer>
-  <p><a href="./">← torabo-fun トップへ戻る</a> ／ <a href="https://tak-2025.github.io/Torabo-Studio/">Torabo-Studio をブラウザで開く</a></p>
+  <p><a href="./">← torabo-fun トップへ戻る</a> ／ <a target="_blank" rel="noopener" href="https://tak-2025.github.io/Torabo-Studio/">Torabo-Studio をブラウザで開く</a></p>
   <p>スクリーンショットは開発用のモックデータによる表示例です。</p>
 </footer>
 

@@ -73,6 +73,15 @@
   }
   .card h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
   .card p.desc { font-size: 0.95rem; margin-bottom: 0.8rem; }
+  .card .caution {
+    background: var(--notice-bg);
+    border: 1px solid var(--notice-border);
+    border-radius: 8px;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 0.9rem;
+  }
   .card .links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
   .card .links a {
     display: inline-block;
@@ -103,6 +112,7 @@
   }
   ol.flow { margin: 0.5rem 0 0 1.4rem; }
   ol.flow li { margin-bottom: 0.5rem; }
+  .update-note { font-size: 0.8rem; color: var(--muted); margin: 0 0 1.5rem; }
   a { color: var(--accent); }
   footer {
     margin-top: 3.5rem;
@@ -119,87 +129,94 @@
 
 <header class="hero">
   <h1>torabo-fun</h1>
-  <p class="tagline">トラックボール付き無線分割キーボード <strong>torabo-tsuki</strong> をもっと楽しむための、非公式ツール集</p>
+
 </header>
 
-<div class="notice">
-  ⚠️ 開発中の趣味プロジェクトのため、<strong>リポジトリ名やツール名は今後変更される可能性があります</strong>。
-  リンクが切れていた場合は、お手数ですがこのページ（torabo-fun）から辿り直してください。ここが常に最新の入口です。
-</div>
 
 <section class="intro">
   <p>
-    <a href="https://github.com/sekigon-gonnoc/torabo-tsuki-lp">torabo-tsuki</a>
-    （sekigon-gonnoc 氏設計）を日々使う中で「こうだったらいいな」を形にしていった個人製作のツール群です。
-    ファームウェアの機能を拡張し、その設定をブラウザから<strong>再フラッシュ不要で BLE ライブ編集</strong>できるようにしています。
+    <a target="_blank" rel="noopener" href="https://github.com/sekigon-gonnoc/torabo-tsuki-lp">torabo-tsuki-lp</a>
+    を日々使う中で「こうだったらいいな」を形にしていった個人製作のツール群です。
+    ファームウェアの機能を拡張し、その設定をブラウザから<strong>再フラッシュ不要でライブ編集</strong>できるようにしています。
   </p>
-  <p>どのツールもインストール不要で、ブラウザ（Chrome / Edge）から試せます。</p>
+  <p>windowsアプリケーションで構築していたのですが、Web版もできそうなので作ってみました。</p>
 </section>
+
+<p class="update-note">2026/9/5 更新　FW・アプリケーションに不具合があったのをいくつか修正しました。</p>
 
 <h2>ツール一覧</h2>
 
 <div class="card">
   <h3>Torabo-Studio <span class="badge">設定エディタ</span></h3>
   <p class="desc">
-    ZMK Studio の非公式フォーク。キーマップ編集はそのままに、トラックボール・トラックパッド・
-    エンコーダ・LED・マクロ・コンボを BLE 経由でライブ編集するタブを追加。設定のバックアップ／復元にも対応。
+    ZMK Studioをカスタマイズしたものになります。キーマップに関しては、日本語環境しか使用できないケースのためのJIS設定や、不要なBehaviorを非表示にしています。
+    その他、オートレイヤー、マクロ・コンボの設定、トラックパッド等拡張機器の設定ができるようにしています。
+    タブは「編集」（キーマップ／トラックボール／トラックパッド／エンコーダ／マクロ／コンボ／タップ反応／LED）と
+    「管理」（バックアップ／FW情報）の全10種で、接続したキーボードが対応している機能のタブだけが出ます。
+    表示言語は日本語 / English を切り替えられます。
   </p>
   <div class="links">
-    <a class="primary" href="https://tak-2025.github.io/Torabo-Studio/">ブラウザで開く</a>
+    <a target="_blank" rel="noopener" class="primary" href="https://tak-2025.github.io/Torabo-Studio/">ブラウザで開く</a>
     <a href="studio.html">タブ別の機能紹介（スクリーンショット付き）</a>
-    <a href="https://github.com/tak-2025/Torabo-Studio">GitHub</a>
+    <a target="_blank" rel="noopener" href="https://github.com/tak-2025/Torabo-Studio">GitHub</a>
   </div>
 </div>
 
 <div class="card">
   <h3>torabo-tsuki_ext_FW <span class="badge">拡張ファームウェア</span></h3>
   <p class="desc">
-    torabo-tsuki 用の拡張ファームウェア機能モジュール（ZMK モジュール）。使いたい機能をスニペットで個別に
-    ON/OFF でき、必要なファイル一式はブラウザで開くだけの firmware-builder で生成。
-    PC に開発環境を入れずに GitHub Actions でビルドできます。
+    torabo-tsuki 用の拡張ファームウェア機能モジュール（ZMK モジュール）。使いたい機能をスニペットで個別にON/OFF でき、
+    ファームウェア作成する際のファイルを更新することでTorabo Studioに対応したファームウェアの作成が可能になります。
   </p>
   <div class="links">
-    <a class="primary" href="https://tak-2025.github.io/torabo-tsuki_ext_FW/">firmware-builder を開く</a>
-    <a href="https://github.com/tak-2025/torabo-tsuki_ext_FW">GitHub</a>
+    <a target="_blank" rel="noopener" class="primary" href="https://tak-2025.github.io/torabo-tsuki_ext_FW/">firmware-builder を開く</a>
+    <a target="_blank" rel="noopener" href="https://github.com/tak-2025/torabo-tsuki_ext_FW">GitHub</a>
   </div>
 </div>
 
 <div class="card">
   <h3>Torabo-Float <span class="badge">キー表示オーバーレイ</span></h3>
   <p class="desc">
-    「いま押しているキー」と「アクティブレイヤー」を透過・最前面のフローティングウィンドウに
-    リアルタイム表示する Windows 常駐アプリ（Tauri v2）。配信や操作説明のデモ、多レイヤーキーマップの確認に。
-    Web 版はブラウザで開くだけで動きます。
+    レイヤーが変わっている等に苦戦したことがあるので、画面に表示できたらいいなと思い作りました。
+    また、拡張機能が繋がっているかわからなかったので拡張機能の内容を診断から確認できるようにしています。
   </p>
+  <div class="caution">
+    🏢 <strong>ネットワークで制限される場合があります。</strong>：その場合は単一のHTMLでも使えるものを用意していますので、そちらをお使いください。
+  </div>
   <div class="links">
-    <a class="primary" href="https://tak-2025.github.io/Torabo-Float/">Web 版を開く</a>
-    <a href="https://github.com/tak-2025/Torabo-Float">GitHub</a>
+    <a target="_blank" rel="noopener" class="primary" href="https://tak-2025.github.io/Torabo-Float/">Web 版を開く</a>
+    <a target="_blank" rel="noopener" href="https://tak-2025.github.io/Torabo-Float/torabo-float-web.html">単一 HTML 版</a>
+    <a target="_blank" rel="noopener" href="https://github.com/tak-2025/Torabo-Float">GitHub</a>
   </div>
 </div>
 
-<h2>どれから見ればいい？</h2>
+<h2>使い方</h2>
 <div class="card">
   <ol class="flow">
-    <li><strong>キーマップ編集だけなら</strong> — いまのファームウェアのまま
-      <a href="https://tak-2025.github.io/Torabo-Studio/">Torabo-Studio</a> を開いて接続すれば使えます。</li>
-    <li><strong>トラックボールの速度調整やマクロなど独自機能も使うなら</strong> —
-      <a href="https://tak-2025.github.io/torabo-tsuki_ext_FW/">firmware-builder</a>
-      で拡張ファームウェアをビルドして書き込み → Torabo-Studio の追加タブから設定します。</li>
-    <li><strong>押しているキーを画面に出したいなら</strong> — 拡張ファームウェア導入後に
-      <a href="https://tak-2025.github.io/Torabo-Float/">Torabo-Float</a> を開きます。</li>
+    <li><strong>firmware-builder で自分の環境に合わせて設定</strong> —
+      <a target="_blank" rel="noopener" href="https://tak-2025.github.io/torabo-tsuki_ext_FW/">firmware-builder</a>
+      で使いたい機能を選ぶと、ファームウェア作成用の設定ファイルができます。</li>
+    <li><strong>フォークした設定リポジトリの内容を更新</strong> —
+      複数のファイルの更新内容に従って自分の設定リポジトリ（フォーク）に反映して、ファームウェアをビルドしてください。
+      west.ymlに関しては、単純なコピーアンドペーストではないので、説明を確認しながら行ってください。
+      west.ymlの設定がよくわからない場合は、<a target="_blank" rel="noopener" href="https://github.com/tak-2025/fw-test/tree/master/config">こちら</a>のものをご参考にしてください。
+      </li>
+    <li><strong>あとは用途に合わせて</strong> —
+      設定を変えるなら <a target="_blank" rel="noopener" href="https://tak-2025.github.io/Torabo-Studio/">Torabo-Studio</a>、
+      キーボードの状態を画面で見たいなら <a target="_blank" rel="noopener" href="https://tak-2025.github.io/Torabo-Float/">Torabo-Float</a> を開きます。</li>
   </ol>
 </div>
 
 <p class="disclaimer">
-  ⚠️ 本プロジェクト群は <a href="https://zmk.dev/">ZMK Project</a> および torabo-tsuki の設計者とは
-  提携・承認関係にない非公式ツールです。開発には生成 AI を使用しており、動作の保証はありません。
-  各自の構成で動作確認のうえ、自己責任でご利用ください。問題報告は各リポジトリの Issues へお願いします。
+  ⚠️ 本プロジェクト群は <a target="_blank" rel="noopener" href="https://zmk.dev/">ZMK Project</a> および torabo-tsuki の設計者とは
+  提携・承認関係にない非公式ツールです。開発には生成 AI を使用しております。自身が持っているtorabo-tsukiでの動作検証は行っておりますが、動作が不安定になる場合があります。
+  ローカル環境での反映が遅れてしまう場合がございます。
 </p>
 
 <footer>
-  <p>本家: <a href="https://github.com/sekigon-gonnoc/torabo-tsuki-lp">sekigon-gonnoc/torabo-tsuki-lp</a>（キーボード本体）
-    ／ <a href="https://booth.pm/ja/items/7200248">BOOTH 商品ページ（のぎけす屋）</a></p>
-  <p>作者: <a href="https://github.com/tak-2025">@tak-2025</a> — 趣味で作っています</p>
+  <p>本家: <a target="_blank" rel="noopener" href="https://github.com/sekigon-gonnoc/torabo-tsuki-lp">sekigon-gonnoc/torabo-tsuki-lp</a>（キーボード本体）
+    ／ <a target="_blank" rel="noopener" href="https://booth.pm/ja/items/7200248">BOOTH 商品ページ（のぎけす屋）</a></p>
+  <p>作者: <a target="_blank" rel="noopener" href="https://github.com/tak-2025">@tak-2025</a> — 趣味で作っています</p>
 </footer>
 
 </main>
